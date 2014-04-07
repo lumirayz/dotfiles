@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+
+import time
+import os
+
+def uptime():
+	with open("/proc/uptime") as fd:
+		return int(float(fd.read().split(" ")[0]))
+
+def concat(li):
+	return "".join(li)
+
+def style(attrs):
+	return "#[%s]" % attrs
+
+def fg(color):
+	return style("fg=" + color)
+
+def bg(color):
+	return style("bg=" + color)
+
+def default():
+	return style("default")
+
+def field(label, data):
+	return concat([
+		default(),
+		data,
+		fg("cyan"),
+		(" " + label if label is not None else "")
+	])
+
+def sep():
+	return concat([fg("green,bright"), " < ", default()])
+
+def reltime(t):
+	t, sec = divmod(t, 60)
+	t, min = divmod(t, 60)
+	t, hr  = divmod(t, 24)
+	t, day = divmod(t, 30)
+	y, mon = divmod(t, 12)
+	return (sec, min, hr, day, mon, y)
+
+def netstats(device):
+	with open("/proc/net/dev", "r") as fd:
+		for line in fd:
+			data = [l for l in line.split(' ') if l != ""]
+			if data[0] == device + ":":
+				return (int(data[1]), int(data[9]))
+
+def fmtsize(s):
+	def f(i):
+		return "%.0f" % i
+	if s < 5000:
+		return f(float(s)) + "B"
+	elif s < 5000000:
+		return f(s / 1000) + "kB"
+	elif s < 5000000000:
+		return f(s / 1000000) + "MB"
+	elif s < 5000000000000:
+		return f(s / 1000000000) + "GB"
+	else:
+		return f(s / 1000000000000) + "TB"
+
+def fmtnetstat(ns):
+	down, up = ns
+	return concat([
+		fmtsize(down), fg("green,bright"), "d ", default(),
+		fmtsize(up), fg("red,bright"), "u", default()
+	])
+
+def fmtreltime(rt):
+	sec, min, hr, day, mon, year = rt
+	if year > 0:
+		return "%dy %dm %dd %d:%d" % (year, mon, day, hr, min)
+	elif mon > 0:
+		return "%dm %dd %d:%d" % (mon, day, hr, min)
+	elif day > 0:
+		return "%dd %d:%d" % (day, hr, min)
+	else:
+		return "%d:%d" % (hr, min)
+
+def fmtloadavg(avg):
+	return " ".join(map(lambda x: "%.1f" % x, avg))
+
+t = time.localtime(time.time())
+u = reltime(uptime())
+a = os.getloadavg()
+n = netstats("eth0")
+
+print(sep() + sep().join([
+	field(None, fmtnetstat(n)),
+	field(None, fmtloadavg(a)),
+	field(None, fmtreltime(u)),
+	field(None, time.strftime("%H:%M %d/%m/%y", t))
+]))
