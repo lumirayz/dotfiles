@@ -1,12 +1,45 @@
 #!/bin/sh
 
-# ======
-#  Meta
-# ======
+# ========
+#  Config
+# ========
 DOTFILES_DIR=`pwd`
 HOME_DIR="$HOME"
 echo "Dotfiles directory is \"$DOTFILES_DIR\"."
 echo "Home directory is \"$HOME_DIR\"."
+
+FILES_REMOVE="$HOME_DIR/.tmux.bar $HOME_DIR/.tmux.conf $HOME_DIR/.vim $HOME_DIR/.zshrc $HOME_DIR/.vimrc $HOME_DIR/.gvimrc"
+
+# ==================
+#  Dependency check
+# ==================
+if [ ! -d "$HOME_DIR/.oh-my-zsh" ]; then
+	echo "Oh my zsh not installed, aborting…"
+	exit
+fi
+
+# ======
+#  Warn
+# ======
+echo "This script will REMOVE the following files and directories before replacing them:"
+for file in $FILES_REMOVE; do
+	echo " - $file"
+done
+echo
+echo -n "Type \"yes\" if you wish to continue: "
+read line
+if [ x"$line" != x"yes" ]; then
+	echo "Aborting…"
+	exit
+fi
+
+# ========
+#  Remove
+# ========
+echo "Removing files and directories…"
+for file in $FILES_REMOVE; do
+	rm -rf "$file"
+done
 
 # ======
 #  Tmux
