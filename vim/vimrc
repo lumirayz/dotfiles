@@ -85,6 +85,7 @@ set grepprg=grep\ -nH\ $*
 
 " Powerline symbols
 let g:Powerline_symbols = 'fancy'
+set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 
 " No arrow keys
 nnoremap <up> <nop>
