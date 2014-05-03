@@ -86,7 +86,7 @@ def fmtloadavg(avg):
 t = time.localtime(time.time())
 u = reltime(uptime())
 a = os.getloadavg()
-n = netstats("eth0")
+n = netstats("wlan0")
 
 print(sep() + sep().join([
 	field(None, fmtnetstat(n)),

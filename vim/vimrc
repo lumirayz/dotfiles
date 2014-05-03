@@ -1,0 +1,106 @@
+" Enable syntax highlighting
+syntax on
+
+" Disable compatibility mode
+set nocompatible
+
+" Line numbers
+set number
+
+" Relative line numbers
+set relativenumber
+
+" Ruler
+set ruler
+
+" Command history
+set history=1000
+
+" Showcmd
+set showcmd
+
+" Ignore case in searches
+set ignorecase
+
+" If there is an uppercase character, ignore 'ignorecase'
+set smartcase
+
+" Vim encoding
+set encoding=utf-8
+
+" let g:Powerline_symbols="fancy"
+set laststatus=2
+
+" Color scheme
+colorscheme molokai
+
+" Highlight trailing spaces
+highlight TrailingSpaces ctermbg=darkred
+au BufWinEnter * let w:m2=matchadd('TrailingSpaces', '\S\zs\s\+$', -1)
+
+" Position of split
+set splitbelow
+set splitright
+
+" Automatically re-read file when modified
+set autoread
+
+" Tab width
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+
+" Indentation rules
+set nosmartindent
+set nocindent
+set noexpandtab
+set autoindent
+
+" Don't wrap long lines
+set nowrap
+
+" Don't use a swap file
+set noswapfile
+
+" Where the vertical ruler appears
+set colorcolumn=100
+
+" 256color terminal
+if !has("gui_running")
+    set term=screen-256color
+endif
+
+" inoremap <CR> x<BS><CR>x<BS>
+" inoremap <C-D> <C-O>:w<CR>
+
+" Toggle tagbar
+nmap <F8> :TagbarToggle<CR>
+
+" Tab switching keys
+nmap <S-Tab> :tabp<CR>
+nmap <Tab> :tabn<CR>
+
+" Program to grep with
+set grepprg=grep\ -nH\ $*
+
+" Powerline symbols
+let g:Powerline_symbols = 'fancy'
+
+" No arrow keys
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+" Syntastic configuration
+let g:syntastic_haskell_checkers = ["hlint"]
+
+" Make terminal look better
+set t_ut=
+
+" Pathogen
+call pathogen#infect()
