@@ -28,7 +28,7 @@ function man {
 
 # Aliases
 alias ls='ls --color=auto'
-alias tmux="tmux -2"
+alias tmux="tmux -2u"
 
 # Keybinds
 bindkey '^P' up-history
