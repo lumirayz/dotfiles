@@ -4,7 +4,11 @@ These are some of my dotfiles, I primarily use this to back up my own stuff, but
 
  Installation
 --------------
-Run `./install.sh`.
+Run:
+
+	git submodule init
+	git submodule update
+	./install.sh
 
  Dependencies
 --------------
