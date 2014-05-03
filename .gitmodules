@@ -1,0 +1,12 @@
+[submodule "vim/pathogen"]
+	path = vim/pathogen
+	url = https://github.com/tpope/vim-pathogen.git
+[submodule "vim/plugins/syntastic"]
+	path = vim/plugins/syntastic
+	url = https://github.com/scrooloose/syntastic.git
+[submodule "vim/plugins/powerline"]
+	path = vim/plugins/powerline
+	url = https://github.com/Lokaltog/powerline.git
+[submodule "vim/plugins/tabular"]
+	path = vim/plugins/tabular
+	url = https://github.com/godlygeek/tabular.git
